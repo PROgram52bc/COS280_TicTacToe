@@ -60,7 +60,6 @@ class TicTacToe:
         while True:
             print("Player {:.3}'s move".format(self.playerSymbols[self.currentPlayerIdx]))
             row, col = self.playerObjects[self.currentPlayerIdx].makeMove(board=copy.deepcopy(self.board))
-            printBoard(self.board)
             if not self.inBound(row,col):
                 #raise IndexError("Invalid move {:d},{:d} given by player {:.3}".format(row,col,self.playerSymbols[self.currentPlayerIdx]))
                 print("Invalid position {:d},{:d} given by player {:.3}, try again...".format(row,col,self.playerSymbols[self.currentPlayerIdx]))
@@ -71,6 +70,7 @@ class TicTacToe:
                 continue
             print("player {:.3} making a move on {:d},{:d}".format(self.playerSymbols[self.currentPlayerIdx],row,col))
             self.board[row][col] = self.playerSymbols[self.currentPlayerIdx]
+            printBoard(self.board)
             self.nextRound()
             self.winner = self.getWinner()
             if self.winner:
@@ -90,6 +90,6 @@ def tic_tac_toe():
 
 if __name__ == "__main__":
     tic_tac_toe()
-
-print("Please make a call to tic_tac_toe instead of tic-tac-toe since python3 disallows '-' in function names")
-print("To turn on/off cache, change the __init__ method of BruteForcePlayer with a default True to 'useCache' parameter")
+else:
+    print("Please make a call to tic_tac_toe instead of tic-tac-toe since python3 disallows '-' in function names")
+    print("To turn on/off cache, change the __init__ method of BruteForcePlayer with a default True to 'useCache' parameter")
