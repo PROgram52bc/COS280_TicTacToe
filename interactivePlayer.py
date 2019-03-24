@@ -4,6 +4,7 @@ class InteractivePlayer(Player):
     def __init__(self, mySymbol, opponentSymbol):
         super().__init__(mySymbol, opponentSymbol)
     def makeMove(self, board):
+        print("{:*^75}".format("Interactive Player start"))
         printBoard(board)
         print("Your symbol: {:.3}".format(self.mySymbol))
         while True:
@@ -23,6 +24,7 @@ class InteractivePlayer(Player):
             except ValueError as e:
                 print("Please enter a valid integer!")
                 continue;
+        print("{:*^75}".format("Interactive Player end"))
         return row, col
     def __str__(self):
         return "Interactive Player"
