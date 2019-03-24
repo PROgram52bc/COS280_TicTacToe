@@ -20,7 +20,24 @@ class TicTacToe:
         player2 = Player2(symbolPlayer2, symbolPlayer1)
         print("Set {:s} with symbol {:.3s}".format(player2.__str__(), symbolPlayer2))
         self.playerObjects = (player1, player2)
-        self.currentPlayerIdx = randint(0,1)
+
+        # randomly select first player
+        #self.currentPlayerIdx = randint(0,1)
+
+        # ask for the first player
+        while True:
+            playerNum = input("Enter the player to play first\n0: {}\n1: {}\n=> ".format(player1.__str__(), player2.__str__()))
+            try:
+                playerNum = int(playerNum)
+            except ValueError as e:
+                print("Please enter a valid integer!")
+                continue
+            if playerNum > 1 or playerNum < 0:
+                print("Please enter a number in the given range!")
+                continue
+            break
+        self.currentPlayerIdx = playerNum
+
         self.winner = None
     def getWinner(self):
         return getWinner(self.board)
@@ -67,7 +84,12 @@ class TicTacToe:
 
 
 
-
-if __name__ == "__main__":
+def tic_tac_toe():
     ttt = TicTacToe(BruteForcePlayer, InteractivePlayer, 'b', 'i')
     ttt.start()
+
+if __name__ == "__main__":
+    tic_tac_toe()
+
+print("Please make a call to tic_tac_toe instead of tic-tac-toe since python3 disallows '-' in function names")
+print("To turn on/off cache, change the __init__ method of BruteForcePlayer with a default True to 'useCache' parameter")
