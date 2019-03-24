@@ -1,63 +1,7 @@
 from random import randint
-class Player:
-    def __init__(self, mySymbol, opponentSymbol):
-        self.mySymbol = mySymbol
-        self.opponentSymbol = opponentSymbol
-    def makeMove(self, board):
-        pass
-    def __str__(self):
-        return "Generic Player"
-
-class DumbPlayer(Player):
-    def __init__(self, mySymbol, opponentSymbol):
-        super().__init__(mySymbol, opponentSymbol)
-    def makeMove(self, board):
-        for row in range(len(board)):
-            for col in range(len(board[0])):
-                if not board[row][col]:
-                    return row,col
-    def __str__(self):
-        return "Dumb Player"
-
-class InteractivePlayer(Player):
-    def __init__(self, mySymbol, opponentSymbol):
-        super().__init__(mySymbol, opponentSymbol)
-    def makeMove(self, board):
-        printBoard(board)
-        print("Your symbol: {:.3}".format(self.mySymbol))
-        while True:
-            row = input("Enter row number(0-2): ")
-            try:
-                row = int(row)
-                break;
-            except ValueError as e:
-                print("Please enter a valid integer!")
-                continue;
-
-        while True:
-            col = input("Enter col number(0-2): ")
-            try:
-                col = int(col)
-                break;
-            except ValueError as e:
-                print("Please enter a valid integer!")
-                continue;
-        return row, col
-    def __str__(self):
-        return "Interactive Player"
-
-def printBoard(board):
-    for row in board:
-        print("{:-^19}".format(""))
-        print("|", end="")
-        for col in row:
-            if col:
-                print("{:^5.3}".format(col), end="|")
-            else:
-                print("{:5}".format(""), end="|")
-        print("")
-    print("{:-^19}".format(""))
-
+from dumbPlayer import DumbPlayer
+from interactivePlayer import InteractivePlayer
+from utility import printBoard
 
 class TicTacToe:
     """ class representing a tic-tac-toe game. """
@@ -130,7 +74,7 @@ class TicTacToe:
     def start(self):
         while True:
             print("Player {:.3}'s move".format(self.playerSymbols[self.currentPlayerIdx]))
-            row, col = self.playerObjects[self.currentPlayerIdx].makeMove(self.board)
+            row, col = self.playerObjects[self.currentPlayerIdx].makeMove(board=self.board.copy())
             if not self.inBound(row,col):
                 #raise IndexError("Invalid move {:d},{:d} given by player {:.3}".format(row,col,self.playerSymbols[self.currentPlayerIdx]))
                 print("Invalid position {:d},{:d} given by player {:.3}, try again...".format(row,col,self.playerSymbols[self.currentPlayerIdx]))
@@ -156,6 +100,5 @@ class TicTacToe:
 
 
 if __name__ == "__main__":
-    ttt = TicTacToe(InteractivePlayer, DumbPlayer)
+    ttt = TicTacToe(InteractivePlayer, DumbPlayer, 'i', 'd')
     ttt.start()
-
