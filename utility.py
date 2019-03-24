@@ -50,3 +50,10 @@ def boardFull(board):
             if not col:
                 return False
     return True
+
+def countFuncall(f):
+    def nf(*args,**kwargs):
+        nf.count += 1
+        return f(*args,**kwargs)
+    nf.count = 0
+    return nf

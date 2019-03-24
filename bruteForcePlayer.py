@@ -1,5 +1,5 @@
 from player import Player
-from utility import printBoard, getWinner, boardFull
+from utility import printBoard, getWinner, boardFull, countFuncall
 import copy
 
 # Convention in passing object to function call:
@@ -148,6 +148,7 @@ class BruteForcePlayer(Player):
             return result
         self.playerScorePickers = (myScorePicker, opponentScorePicker)
 
+    @countFuncall
     def getScore(self, board, pos, playerIdx):
         """ Return 1 if it will win, return 0 if it will tie, return -1 if it will lose """
         if self.scoreCache:
@@ -208,6 +209,12 @@ class BruteForcePlayer(Player):
     def makeMove(self, board):
         moves = self.availableMoves(board, 0)
         bestMove = self.playerScorePickers[0](moves, self.playerWinningScores[0])
+
+        # report the count
+        print("getScore function called {} times in this move".format(self.getScore.count))
+        # reset the count
+        self.getScore.__func__.count = 0
+
         return bestMove.getPos()
 
 
